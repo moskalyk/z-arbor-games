@@ -147,7 +147,7 @@ const App = () => {
                       ? 
                         <Nyan hotkey="command+ctrl+right+left" /> 
                         : 
-                        <p> high score: {score} </p> }
+                        <h2 style={{background: 'blue', color: 'white', padding: '10px'}}> high score: {score} </h2> }
               </div>
             )
           }
