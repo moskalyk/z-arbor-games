@@ -50,7 +50,7 @@ const App = () => {
         setScore(localStorage.getItem('high'))
         // TODO: 
         // reasign score to scanned wood
-        // invite collaborators for feedback
+        // invite collaborators for feedback & input
         console.log(score)
       }, 1106*10)
       return () => clearTimeout(timer);
