@@ -23,12 +23,16 @@ import Nyan from "react-nyan";
       "description": "Name of the person",
       "type": "string",
     },
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+    },
     "date": {
       "type": "integer",
       "minimum": 1,
     },
   },
-  "required": ["_id", 'scan', 'date'],
+  "required": ["_id", 'scan', 'score', 'date'],
 });
 
 const cheerio = require('cheerio');
@@ -43,16 +47,25 @@ const App = () => {
     const [score, setScore] = useState(0)
 
     useEffect(() => {
-      const timer = setTimeout(() => {
-        setIsPlaying(false)
-        console.log(localStorage.getItem('high'))
-        console.log()
-        setScore(localStorage.getItem('high'))
-        // TODO: 
-        // reasign score to scanned wood
-        // invite collaborators for feedback & input
-        console.log(score)
-      }, 1106*10)
+      let timer;
+
+      // if(!isPlaying){
+        timer = setTimeout(() => {
+            setIsPlaying(false)
+            console.log(localStorage.getItem('high'))
+            console.log()
+            setScore(localStorage.getItem('high'))
+            // TODO: 
+            // reasign score to scanned wood
+            // const found = await client.find('🧶', "Person", {})
+            // await found.update(score)
+            // invite collaborators for feedback & input
+            console.log(score)
+          }, 2022*10)
+        // }
+        // else {
+
+        // }
       return () => clearTimeout(timer);
     }, []);
 
@@ -68,7 +81,7 @@ const App = () => {
         const Being = db.collection("Person")
         console.log(data)
         setScan(data)
-        const res = await Being.insert({ scan: data, date: Date.now() })
+        const res = await Being.insert({ scan: data, score: 0, date: Date.now() })
         console.log(res)
 
         setIsScanned(true)
@@ -101,7 +114,7 @@ const App = () => {
           <h1>Zζ arbor games</h1>
         </div>
         {
-          isScanned ? 
+          !isScanned ? 
           <QrReader
             delay={300}
             onError={handleError}
@@ -125,11 +138,16 @@ const App = () => {
                       <br/>
                       <br/>
                       <br/>
-                      <p>begin rowing with keys "command+ctrl+right+left"</p>
+                      <p>begin exercise with keys "command+ctrl+right+left"</p>
                     </>
                 }
                 
-                {isPlaying ? <Nyan hotkey="command+ctrl+right+left" /> : <> high score: {score} </> }
+                {
+                    isPlaying 
+                      ? 
+                        <Nyan hotkey="command+ctrl+right+left" /> 
+                        : 
+                        <p> high score: {score} </p> }
               </div>
             )
           }
